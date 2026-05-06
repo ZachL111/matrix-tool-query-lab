@@ -1,0 +1,7 @@
+name,demand,capacity,latency,risk,weight,score,decision,reason
+baseline,58,88,14,10,9,171,review,cli tools baseline scenario exercises the review path for bounded failure handling
+pressure,81,76,25,23,11,128,review,cli tools pressure scenario exercises the review path for bounded failure handling
+surge,108,99,18,17,11,249,accept,cli tools surge scenario keeps the local fixture within the modeled acceptance band
+degraded,69,63,32,27,7,37,review,cli tools degraded scenario exercises the review path for bounded failure handling
+recovery,89,108,17,12,12,252,accept,cli tools recovery scenario keeps the local fixture within the modeled acceptance band
+boundary,75,81,21,19,8,134,review,cli tools boundary scenario exercises the review path for bounded failure handling
