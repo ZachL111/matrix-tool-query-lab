@@ -1,0 +1,17 @@
+{
+  "repo": "matrix-tool-query-lab",
+  "thresholds": {
+    "signal": 2,
+    "slack": 1,
+    "confidence": 2,
+    "drag": 4,
+    "ship": 163,
+    "watch": 101
+  },
+  "terms": [
+    "file span",
+    "terminal width",
+    "argument risk",
+    "report density"
+  ]
+}
