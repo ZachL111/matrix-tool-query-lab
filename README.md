@@ -1,69 +1,40 @@
 # matrix-tool-query-lab
 
-`matrix-tool-query-lab` explores cli tools in Python. The repository keeps the core rule set compact, then surrounds it with examples that show how the decisions move.
+`matrix-tool-query-lab` is a Python project in cli tools. Its focus is to package a Python local lab for query analysis with seeded input scenarios, deterministic summary checks, and documented operating limits.
 
-## Matrix Tool Query Lab Notes
+## Use Case
 
-The quickest review path is the verifier first, then the fixtures, then the operations note. That order makes it easy to see whether the code, data, and explanation still agree.
+The point is to make a small domain rule concrete enough that a reader can change it and immediately see what broke.
 
-## Why This Exists
+## Matrix Tool Query Lab Review Notes
 
-The goal is to capture the core behavior in code and make the surrounding assumptions obvious. A reader should be able to run the verifier, open the fixtures, and understand why each decision was made.
+`edge` and `stale` are the cases worth reading first. They show the optimistic and cautious ends of the fixture.
 
-## Implementation Notes
+## Highlights
 
-The project is organized around a compact model rather than a large framework. Inputs are scored, classified, and checked against golden fixtures. The constants live in code and are mirrored in metadata so documentation drift is easy to catch. The Python code favors standard library tools and direct tests over framework weight.
+- `fixtures/domain_review.csv` adds cases for file span and terminal width.
+- `metadata/domain-review.json` records the same cases in structured form.
+- `config/review-profile.json` captures the read order and the two review questions.
+- `examples/matrix-tool-query-walkthrough.md` walks through the case spread.
+- The Python code includes a review path for `argument risk` and `file span`.
+- `docs/field-notes.md` explains the strongest and weakest cases.
 
-## Example Scenarios
+## Code Layout
 
-The examples are meant to be readable before they are exhaustive. They cover enough variation to show how latency and risk can pull a decision below the threshold.
+The implementation keeps the scoring rule plain: reward signal and confidence, preserve slack, penalize drag, then classify the result into a review lane.
 
-## Feature Notes
+The added Python path is deliberately direct, with fixtures doing most of the explaining.
 
-- Uses fixture data to keep argument shape changes visible in code review.
-- Includes extended examples for file input, including `recovery` and `degraded`.
-- Documents repeatable reports tradeoffs in `docs/operations.md`.
-- Runs locally with a single verification command and no external credentials.
-- Stores project constants and verification metadata in `metadata/project.json`.
-
-## Local Setup
-
-Clone the repository, enter the directory, and run the verifier. No database server, cloud account, or token is required.
-
-## Tests
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/audit.ps1
-```
-
-The audit command checks repository structure and README constraints before it delegates to the verifier.
-
-## Code Tour
-
-- `src`: primary implementation
-- `tests`: verification harness
-- `fixtures`: compact golden scenarios
-- `examples`: expanded scenario set
-- `metadata`: project constants and verification metadata
-- `docs`: operations and extension notes
-- `scripts`: local verification and audit commands
-- `pyproject.toml`: Python project metadata
-
-## Boundaries
-
-This code is local-first. It makes no claim about deployed usage and avoids credentials, hosted state, and environment-specific setup.
-
-## Roadmap
-
-- Add malformed input fixtures so the failure path is as visible as the happy path.
-- Split the scoring constants into a typed configuration object and validate it before use.
-- Add a comparison mode that shows how decisions change when one signal is adjusted.
-- Add one more cli tools fixture that focuses on a malformed or borderline input.
-
-## Try It
+## Run The Check
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify.ps1
 ```
 
-This runs the language-level build or test path against the compact fixture set.
+## Regression Path
+
+The same command runs the local verification path. The highest-scoring domain case is `edge` at 247, which lands in `ship`. The most cautious case is `stale` at 163, which lands in `ship`.
+
+## Future Work
+
+This remains a local project with deterministic fixtures. It does not depend on credentials, hosted services, or live data. Future work should add richer malformed inputs before widening the public API.
